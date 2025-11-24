@@ -50,5 +50,9 @@ public class BaseTest {
     }
 
 
-
+    public void searchasong() {
+        WebElement searchsong = driver.findElement(By.xpath("//input[@type = 'search']"));
+        searchsong.clear();
+        searchsong.sendKeys("tunnel of lights");
+    }
 }
