@@ -1,5 +1,8 @@
+import com.beust.jcommander.Parameter;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -12,27 +15,32 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.testng.annotations.Parameters;
+
 import java.time.Duration;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.openqa.selenium.support.ui.ExpectedCondition.*;
 
 public class BaseTest {
 
     public WebDriver driver;
-    public String url = "https://qa.koel.app/";
+    public String url ;
     @BeforeSuite
     static void setupClass() {
         WebDriverManager.chromedriver().setup();
     }
     @BeforeMethod
-    public void openbrowser(){
+    @Parameters({"BasURL"})
+    public void openbrowser(String BaseURL){
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
 
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
+        url = BaseURL;
     }
     @AfterMethod
     public void closebrowser(){
@@ -139,5 +147,64 @@ public class BaseTest {
         System.out.println("third item:" + thirditem.getText());
         thirditem.click();
         }
+    }
+
+    public void loginpage() {
+        navigationpage();
+        emailaddress("gowri.saarangan@testpro.io");
+        password("iVRbJcck");
+        loginbutton();
+    }
+
+    public String randomnamegenerator() {
+        String name= RandomStringUtils.randomAlphabetic(7);
+        return name;
+    }
+
+    public void searchplaylist(String rdnplaylistname) {
+        System.out.println(rdnplaylistname);
+        System.out.println("//li[@class='playlist playlist']/a[contains(text(),'"+rdnplaylistname+"')]");
+        boolean exists;
+        try {
+           driver.findElement(By.xpath("//li[@class='playlist playlist']/a[contains(text(),'" + rdnplaylistname + "')]"));
+            exists = true;
+        }catch (NoSuchElementException e){
+            exists = false;
+            System.out.println(exists);
+        }
+        if(!exists) {
+            System.out.println(rdnplaylistname);
+            //createplaylist(rdnplaylistname);
+
+        }
+        else {
+            driver.findElement(By.xpath("//li[@class='playlist playlist']/a[contains(text(),'" + rdnplaylistname + "')]")).click();
+            //delplaylistname(rdnplaylistname);
+        }
+    }
+
+    public void createplaylist(String plylistname) throws InterruptedException {
+        System.out.println(plylistname);
+        driver.findElement(By.xpath("//i[@data-testid='sidebar-create-playlist-btn']")).click();
+        Thread.sleep(2000);
+        driver.findElement(By.xpath("//li[@data-testid='playlist-context-menu-create-simple']")).click();
+        Thread.sleep(2000);
+        WebElement createplylstname = driver.findElement(By.xpath("//*[@id='playlists']/form/input"));
+        createplylstname.clear();
+        //System.out.println("I am here" +plylistname);
+        createplylstname.sendKeys(plylistname);
+        createplylstname.sendKeys(Keys.ENTER);
+        driver.findElement(By.xpath("//li[@class='playlist playlist']/a[contains(text(),'" + plylistname + "')]")).click();
+        Thread.sleep(5000);
+        delplaylistname(plylistname);
+
+    }
+
+    public void delplaylistname(String playlist) throws InterruptedException {
+        Thread.sleep(2000);
+        driver.findElement(By.xpath("//button[@class='del btn-delete-playlist']")).click();
+        Thread.sleep(2000);
+        String text = driver.findElement(By.xpath("//div[@class='alertify-logs top right']/div")).getText();
+        Assert.assertEquals(text,"Deleted playlist \""+playlist+".\"");
     }
 }

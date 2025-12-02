@@ -17,6 +17,22 @@ dependencies {
 
 test {
     useTestNG() {
+        suites "src/test/resources/Homework19.xml"
+    }
+}
+
+tasks.register('Homework19', Test){
+    useTestNG(){
+        suites "src/test/resources/Homework19.xml"
+    }
+}
+tasks.register('Homework18song', Test){
+    useTestNG(){
         suites "src/test/resources/Homework18song.xml"
+    }
+}
+tasks.register('TestNG', Test){
+    useTestNG(){
+        suites "src/test/resources/TestNG.xml"
     }
 }
