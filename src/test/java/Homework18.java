@@ -49,10 +49,7 @@ public class Homework18 extends BaseTest{
     }
     @Test
     public void playnextsongbymediacontrol() throws InterruptedException {
-        navigationpage();
-        emailaddress("gowri.saarangan@testpro.io");
-        password("iVRbJcck");
-        loginbutton();
+        loginpage();
         Thread.sleep(2000);
         searchasong();
         Thread.sleep(2000);
