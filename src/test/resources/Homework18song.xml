@@ -8,7 +8,7 @@
            <class name="Homework18">
               <methods>
                 <include name="playNextSong"/>
-                <exclude name="playnextsongbymediacontrol"/>
+                <include name="playnextsongbymediacontrol"/>
               </methods>
            </class>
         </classes>

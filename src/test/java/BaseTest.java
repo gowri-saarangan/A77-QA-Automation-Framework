@@ -115,18 +115,24 @@ public class BaseTest {
         Assert.assertNotNull(pausebtn);
     }
     public void clickfirstsongbymediacontrol() {
-        //Actions action = new Actions(driver);
+       // Actions action = new Actions(driver);
         WebElement firstsong = driver.findElement(By.xpath("//*[@id='songResultsWrapper']/div/div/div[1]/table/tr[1]"));
-        firstsong.click();
+       firstsong.click();
         //action.doubleClick(firstsong).perform();
     }
     public void clickplay() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-       // WebElement wrapper = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='mainFooter']/div[1]/span[1]//span[@data-testid='play-btn']")));
-        WebElement wrapper = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@class='album-thumb-wrapper']")));
+       Actions action = new Actions(driver);
+        WebElement plybtn = driver.findElement(By.xpath("//span[@data-testid='play-btn']"));
+       action.doubleClick(plybtn).perform();
+       // WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+      // WebElement wrapper = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='mainFooter']/div[1]/span[1]//span[@data-testid='play-btn']")));
+        //WebElement wrapper = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[@class='album-thumb-wrapper']")));
         //WebElement wrapper = driver.findElement(By.xpath("//span[@class='album-thumb-wrapper']"));
-        wrapper.click();
-        driver.findElement(By.xpath("//*[@id='mainFooter']/div/span//span[@data-testid='play-btn']")).click();
+        //wrapper.click();
+        System.out.println("I am here");
+        //WebElement nxtplybtn = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='mainFooter']/div/span//span[@data-testid='play-btn']")));
+        //nxtplybtn.click();
+
     }
 
     public void nextsongselected() {
