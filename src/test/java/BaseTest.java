@@ -224,4 +224,35 @@ public class BaseTest {
         //String text = driver.findElement(By.xpath("//div[@class='alertify-logs top right']/div")).getText();
         Assert.assertEquals(text,"Deleted playlist \""+playlist+".\"");
     }
+
+    public void createrenameplaylist(String plylistname) throws InterruptedException {
+        System.out.println(plylistname);
+        driver.findElement(By.xpath("//i[@data-testid='sidebar-create-playlist-btn']")).click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//li[@data-testid='playlist-context-menu-create-simple']"))).click();
+        WebElement createplylstname = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='playlists']/form/input")));
+        createplylstname.clear();
+        createplylstname.sendKeys(plylistname);
+        createplylstname.sendKeys(Keys.ENTER);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//li[@class='playlist playlist']/a[contains(text(),'" + plylistname + "')]")));
+        String text = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='alertify-logs top right']/div"))).getText();
+        Assert.assertEquals(text,"Created playlist \""+plylistname+".\"");
+        Boolean createmsg = wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@class='alertify-logs top right']/div")));
+    }
+
+
+    public void renamingplaylist(String newname,String oldname) {
+        Actions action = new Actions(driver);
+        WebElement oldplylistname =driver.findElement(By.xpath("//li[@class='playlist playlist']//a[contains(text(),\"" +oldname+ "\")]"));
+        action.doubleClick(oldplylistname).perform();
+        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(10));
+        WebElement  editbox =wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//li[@class='playlist playlist editing']//input[@name = 'name']")));
+        editbox.sendKeys(Keys.chord(Keys.CONTROL,"a",Keys.DELETE));
+        editbox.sendKeys(newname);
+        editbox.sendKeys(Keys.ENTER);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//li[@class='playlist playlist']/a[contains(text(),'" + newname + "')]")));
+        String text = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='alertify-logs top right']/div"))).getText();
+        Assert.assertEquals(text,"Updated playlist \""+newname+".\"");
+
+    }
 }

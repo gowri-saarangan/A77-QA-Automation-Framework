@@ -19,7 +19,8 @@ test {
     useTestNG() {
        // suites "src/test/resources/Homework19.xml"
         //suites "src/test/resources/Homework18song.xml"
-        suites "src/test/resources/Homework20.xml"
+        //suites "src/test/resources/Homework20.xml"
+        suites "src/test/resources/Homework21.xml"
     }
 }
 
@@ -41,5 +42,10 @@ tasks.register('TestNG', Test){
 tasks.register('Homework20', Test){
     useTestNG(){
         suites "src/test/resources/Homework20.xml"
+    }
+}
+tasks.register('Homework21', Test){
+    useTestNG(){
+        suites "src/test/resources/Homework21.xml"
     }
 }
