@@ -17,8 +17,9 @@ dependencies {
 
 test {
     useTestNG() {
-        suites "src/test/resources/Homework19.xml"
-        suites "src/test/resources/Homework18song.xml"
+       // suites "src/test/resources/Homework19.xml"
+        //suites "src/test/resources/Homework18song.xml"
+        suites "src/test/resources/Homework20.xml"
     }
 }
 
@@ -35,5 +36,10 @@ tasks.register('Homework18song', Test){
 tasks.register('TestNG', Test){
     useTestNG(){
         suites "src/test/resources/TestNG.xml"
+    }
+}
+tasks.register('Homework20', Test){
+    useTestNG(){
+        suites "src/test/resources/Homework20.xml"
     }
 }
