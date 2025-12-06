@@ -61,7 +61,9 @@ public class BaseTest {
         passwordfield.sendKeys(pass);
     }
     public void loginbutton() {
-        driver.findElement(By.xpath("//button[@type='submit']")).click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@type='submit']"))).click();
+        //driver.findElement(By.xpath("//button[@type='submit']")).click();
     }
 
 
@@ -192,25 +194,34 @@ public class BaseTest {
     public void createplaylist(String plylistname) throws InterruptedException {
         System.out.println(plylistname);
         driver.findElement(By.xpath("//i[@data-testid='sidebar-create-playlist-btn']")).click();
-        Thread.sleep(2000);
-        driver.findElement(By.xpath("//li[@data-testid='playlist-context-menu-create-simple']")).click();
-        Thread.sleep(2000);
-        WebElement createplylstname = driver.findElement(By.xpath("//*[@id='playlists']/form/input"));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//li[@data-testid='playlist-context-menu-create-simple']"))).click();
+        //driver.findElement(By.xpath("//li[@data-testid='playlist-context-menu-create-simple']")).click();
+        WebElement createplylstname = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='playlists']/form/input")));
+        //WebElement createplylstname = driver.findElement(By.xpath("//*[@id='playlists']/form/input"));
         createplylstname.clear();
         //System.out.println("I am here" +plylistname);
         createplylstname.sendKeys(plylistname);
         createplylstname.sendKeys(Keys.ENTER);
-        driver.findElement(By.xpath("//li[@class='playlist playlist']/a[contains(text(),'" + plylistname + "')]")).click();
-        Thread.sleep(5000);
-        delplaylistname(plylistname);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//li[@class='playlist playlist']/a[contains(text(),'" + plylistname + "')]")));
+        //String text = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='alertify-logs top right']/div"))).getText();
+        //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
+        String text = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='alertify-logs top right']/div"))).getText();
+        Assert.assertEquals(text,"Created playlist \""+plylistname+".\"");
+        Boolean createmsg = wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@class='alertify-logs top right']/div")));
+                if(createmsg){
+                    delplaylistname(plylistname);
+                }
+
 
     }
 
     public void delplaylistname(String playlist) throws InterruptedException {
-        Thread.sleep(2000);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.findElement(By.xpath("//button[@class='del btn-delete-playlist']")).click();
-        Thread.sleep(2000);
-        String text = driver.findElement(By.xpath("//div[@class='alertify-logs top right']/div")).getText();
+        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(10));
+        String text = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='alertify-logs top right']/div"))).getText();
+        //String text = driver.findElement(By.xpath("//div[@class='alertify-logs top right']/div")).getText();
         Assert.assertEquals(text,"Deleted playlist \""+playlist+".\"");
     }
 }
