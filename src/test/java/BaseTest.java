@@ -41,6 +41,7 @@ public class BaseTest {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
         url = BaseURL;
+        navigationpage();
     }
     @AfterMethod
     public void closebrowser(){
@@ -157,7 +158,7 @@ public class BaseTest {
         }
     }
 
-    public void loginpage() {
+   public void loginpage() {
         navigationpage();
         emailaddress("gowri.saarangan@testpro.io");
         password("iVRbJcck");
