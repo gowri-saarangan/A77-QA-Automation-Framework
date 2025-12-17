@@ -33,12 +33,12 @@ public class playlistpage extends BasePage{
 
     By renplylistname = new By.ByXPath("//li[@class='playlist playlist']/a[contains(text(),'" + newname + "')]");
     //By alertmsggone = new By.ByXPath("//div[@class='alertify-logs top right']/div");
-    public boolean avatardisplayed(){
+  /*  public static boolean avatardisplayed(){
 
         return  findelement(avatarimg).isDisplayed();
     }
 
-    public void createrenewplaylist(String plylistname) throws InterruptedException {
+    public static void createrenewplaylist(String plylistname) throws InterruptedException {
         System.out.println(plylistname);
         findelement(createplylistbtn).click();
        // WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -58,7 +58,7 @@ public class playlistpage extends BasePage{
     }
 
 
-    public void playlistrename(String newname,String oldname) {
+    public static void playlistrename(String newname, String oldname) {
         oldplylistname = oldname;
         By crtplylistname = new By.ByXPath("//li[@class='playlist playlist']/a[contains(text(),'" + oldplylistname + "')]");
         System.out.println(oldplylistname);
@@ -79,7 +79,7 @@ public class playlistpage extends BasePage{
                 //wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='alertify-logs top right']/div"))).getText();
         Assert.assertEquals(text,"Updated playlist \""+newname+".\"");
 
-    }
+    }*/
    /* public void listisempty(String oldname) throws InterruptedException{
         oldplylistname =oldname;
         By crtplylistname = new By.ByXPath("//li[@class='playlist playlist']/a[contains(text(),'" + oldplylistname + "')]");

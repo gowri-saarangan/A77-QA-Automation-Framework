@@ -21,11 +21,11 @@ test {
         //suites "src/test/resources/Homework18song.xml"
         //suites "src/test/resources/Homework20.xml"
         //suites "src/test/resources/Homework21.xml"
-        suites "src/test/resources/Homework22.xml"
+        suites "src/test/resources/Homework23.xml"
     }
 }
 
-tasks.register('Homework19', Test){
+/*tasks.register('Homework19', Test){
     useTestNG(){
         suites "src/test/resources/Homework19.xml"
     }
@@ -54,4 +54,4 @@ tasks.register('Homework22', Test){
     useTestNG(){
         suites "src/test/resources/Homework22.xml"
     }
-}
+}*/
