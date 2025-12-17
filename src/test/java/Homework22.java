@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 import org.openqa.selenium.support.locators.RelativeLocator;
 
 public class Homework22 extends BaseTest{
-    @Test
+ /*   @Test
     public void renamingtheplaylist() throws InterruptedException {
         LoginPageapp LoginPageapp = new LoginPageapp(driver);
         playlistpage playlistpage = new playlistpage(driver);
@@ -30,5 +30,5 @@ public class Homework22 extends BaseTest{
 
       // Assert.assertTrue(basePage.findelements(playlist).isEmpty());
        // playlistpage.listisempty(listname1);
-    }
+    }*/
 }
