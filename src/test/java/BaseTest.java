@@ -7,7 +7,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.chromium.ChromiumDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -17,6 +24,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.testng.annotations.Parameters;
 
+import java.net.MalformedURLException;
+import java.net.URI;
 import java.time.Duration;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -25,19 +34,20 @@ import static org.openqa.selenium.support.ui.ExpectedCondition.*;
 
 public class BaseTest {
 
-    public WebDriver driver;
+    public static WebDriver driver;
     public String url ;
     @BeforeSuite
     static void setupClass() {
-        WebDriverManager.chromedriver().setup();
+       // WebDriverManager.chromedriver().setup();
     }
     @BeforeMethod
     @Parameters({"BasURL"})
-    public void openbrowser(String BaseURL){
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--remote-allow-origins=*");
+    public void openbrowser(String BaseURL) throws MalformedURLException {
+        //ChromeOptions options = new ChromeOptions();
+        //options.addArguments("--remote-allow-origins=*");
 
-        driver = new ChromeDriver(options);
+        //driver = new ChromeDriver(options);
+        driver = pickbrowser(System.getProperty("browser"));
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
         url = BaseURL;
@@ -50,6 +60,36 @@ public class BaseTest {
 
     public void navigationpage() {
         driver.get(url);
+    }
+
+    public static WebDriver pickbrowser(String browser) throws MalformedURLException {
+        DesiredCapabilities caps = new DesiredCapabilities();
+        String gridurl = "http://192.168.4.24:4444";
+        switch(browser){
+           /*case "chrome":
+                WebDriverManager.chromedriver().setup();
+                return driver = new ChromeDriver();
+            case "edge":
+                WebDriverManager.edgedriver().setup();
+                return driver = new EdgeDriver();*/
+            case "grid-firefox":
+                caps.setCapability("browserName","firefox");
+                return driver = new RemoteWebDriver(URI.create(gridurl).toURL(),caps);
+            case "grid-ie":
+                caps.setCapability("browserName","internet explorer");
+                return driver = new RemoteWebDriver(URI.create(gridurl).toURL(),caps);
+            case "grid-chrome":
+                caps.setCapability("browserName","chrome");
+                return driver = new RemoteWebDriver(URI.create(gridurl).toURL(),caps);
+            case "grid-edge":
+                caps.setCapability("browserName","MicrosoftEdge");
+                return driver = new RemoteWebDriver(URI.create(gridurl).toURL(),caps);
+             default:
+                WebDriverManager.chromedriver().setup();
+                ChromeOptions chromeOptions = new ChromeOptions();
+                chromeOptions.addArguments("--remote-allow-origins=*");
+                return driver = new ChromeDriver(chromeOptions);
+        }
     }
     public void emailaddress(String mail) {
         WebElement emailfield = driver.findElement(By.xpath("//input[@type='email']"));
