@@ -31,6 +31,8 @@ public class AppPlaylistPage extends AppBasePage{
     WebElement alertmsg;
     @FindBy(xpath = "//li[@class='playlist playlist editing']//input[@name = 'name']")
     WebElement playlistedit;
+    @FindBy(xpath = "//button[@class='del btn-delete-playlist']")
+    WebElement deleteplaylist;
    // @FindBy(xpath = )
     //By renplylistname = new By.ByXPath("//li[@class='playlist playlist']/a[contains(text(),'" + newname + "')]");
 
@@ -79,7 +81,15 @@ public class AppPlaylistPage extends AppBasePage{
         String text = wait.until(ExpectedConditions.visibilityOf(alertmsg)).getText();
         //wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='alertify-logs top right']/div"))).getText();
         Assert.assertEquals(text,"Updated playlist \""+newname+".\"");
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.invisibilityOf(alertmsg));
 
+    }
+    public void deleteplaylist(String playlist) throws InterruptedException {
+        new WebDriverWait(driver,Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOf(deleteplaylist)).click();
+        //driver.findElement(By.xpath("//button[@class='del btn-delete-playlist']")).click();
+        String text = wait.until(ExpectedConditions.visibilityOf(alertmsg)).getText();
+        //String text = driver.findElement(By.xpath("//div[@class='alertify-logs top right']/div")).getText();
+        Assert.assertEquals(text,"Deleted playlist \""+playlist+".\"");
     }
   /* public String oldplylistname;
     //String newname;

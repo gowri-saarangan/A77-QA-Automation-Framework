@@ -21,7 +21,8 @@ test {
         //suites "src/test/resources/Homework18song.xml"
         //suites "src/test/resources/Homework20.xml"
         //suites "src/test/resources/Homework21.xml"
-        suites "src/test/resources/Homework23.xml"
+        suites "src/test/resources/Homework24.xml"
+        systemProperty("browser",System.getProperty("browser"));
     }
 }
 
